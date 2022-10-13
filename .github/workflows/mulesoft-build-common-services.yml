@@ -37,5 +37,28 @@ jobs:
     - name: Replace repo password in cicdSettings.xml
       run: sed -i "s/_repopassword_/${{secrets.MULESOFT_REPO_PASSWORD}}/g" cicdSettings.xml
 
-    - name: Execute build
-      run: mvn clean install -DskipTests -s cicdSettings.xml -gs cicdSettings.xml
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml -s cicdSettings.xml -gs cicdSettings.xml
+
+    - name: Stamp artifact file name with commit hash
+      run: |
+        artifactName1=$(ls target/*.jar | head -1)
+        commitHash=$(git rev-parse --short "$GITHUB_SHA")
+        artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
+        mv $artifactName1 $artifactName2
+    - name: Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: artifacts
+        path: target/*.jar

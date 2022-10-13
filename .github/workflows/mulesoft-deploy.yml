@@ -11,6 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+      - uses: actions/download-artifact@master
+        with:
+          name: artifacts
+
       - name: Replace connected app clientid in pom.xml
         run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
 
@@ -41,7 +50,9 @@ jobs:
 
       - name: Deploy to Anypoint
         run: |
-          mvn clean package deploy -DmuleDeploy \
+          artifactName=$(ls *.jar | head -1)
+          mvn deploy -DmuleDeploy \
+          -Dmule.artifact=$artifactName \
           -DskipTests -e \
           -s cicdSettings.xml \
           -gs cicdSettings.xml
