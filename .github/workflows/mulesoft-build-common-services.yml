@@ -10,10 +10,11 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: mutual-of-enumclaw/mulesoft-common-services
-        path: ./
+        token: ${{ github.token }}
+        path: mulsesoft-common-services
 
     - name: Replace connected app clientid in pom.xml
       run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
