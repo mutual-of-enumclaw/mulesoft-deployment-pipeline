@@ -19,6 +19,9 @@ jobs:
           webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
           card-layout-exit: complete
           show-on-start: false
+          custom-facts: |
+            - name: Environment
+              value: Development
 
       # - uses: actions/cache@v1
       #   with:
