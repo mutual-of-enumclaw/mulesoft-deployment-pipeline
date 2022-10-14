@@ -20,43 +20,33 @@ jobs:
       #   with:
       #     name: artifacts
 
-      - name: Replace connected app clientid in pom.xml
-        run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
+      # - name: Replace connected app clientid in pom.xml
+      #   run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
 
-      - name: Replace connected app secret in pom.xml
-        run: sed -i "s/_CONNECTED_APP_CLIENT_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" pom.xml
+      # - name: Replace connected app secret in pom.xml
+      #   run: sed -i "s/_CONNECTED_APP_CLIENT_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" pom.xml
 
-      - name: Replace anypoint platform clientid in pom.xml
-        run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_ID_/${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}/g" pom.xml
+      # - name: Replace anypoint platform clientid in pom.xml
+      #   run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_ID_/${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}/g" pom.xml
 
-      - name: Replace anypoint platform secret in pom.xml
-        run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_SECRET_/${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}/g" pom.xml
+      # - name: Replace anypoint platform secret in pom.xml
+      #   run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_SECRET_/${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}/g" pom.xml
 
 
-      - name: Replace connected app clientid in cicdSettings.xml
-        run: sed -i "s/_CLIENTID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" cicdSettings.xml
+      # - name: Replace connected app clientid in cicdSettings.xml
+      #   run: sed -i "s/_CLIENTID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" cicdSettings.xml
 
-      - name: Replace connected app secret in cicdSettings.xml
-        run: sed -i "s/_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" cicdSettings.xml
+      # - name: Replace connected app secret in cicdSettings.xml
+      #   run: sed -i "s/_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" cicdSettings.xml
 
-      - name: Replace repo user name in cicdSettings.xml
-        run: sed -i "s/_repousername_/${{secrets.MULESOFT_REPO_USERNAME}}/g" cicdSettings.xml
+      # - name: Replace repo user name in cicdSettings.xml
+      #   run: sed -i "s/_repousername_/${{secrets.MULESOFT_REPO_USERNAME}}/g" cicdSettings.xml
 
-      - name: Replace repo password in cicdSettings.xml
-        run: sed -i "s/_repopassword_/${{secrets.MULESOFT_REPO_PASSWORD}}/g" cicdSettings.xml
+      # - name: Replace repo password in cicdSettings.xml
+      #   run: sed -i "s/_repopassword_/${{secrets.MULESOFT_REPO_PASSWORD}}/g" cicdSettings.xml
 
-      - name: Check file existence
-        id: check_files
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "~/.m2/repository/0072e005-3972-479c-9ff1-40535876d0fe/moe-commmon-services/1.0.0/moe-common-services-1.0.0-mule-plugin.jar"
-
-      # - name: download then whole thing
-      #   run: mvn dependency:copy-dependencies -DoutputDirectory=~/.m2/repository/0072e005-3972-479c-9ff1-40535876d0fe/
-
-      - name: File exists
-        if: steps.check_files.outputs.files_exists == 'true'
-        run: echo "flargen"
+      - name: Print effective-settings
+        run: mvn help:effective-settings
 
       - name: Deploy to Nexus
         run: mvn clean deploy -s cicdSettings.xml -gs cicdSettings.xml -U
