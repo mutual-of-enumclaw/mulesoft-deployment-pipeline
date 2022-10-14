@@ -11,6 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: list
+        run: |
+          ls
+          node ~/.m2/repository
+
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
