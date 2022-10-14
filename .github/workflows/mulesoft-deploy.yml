@@ -46,7 +46,7 @@ jobs:
         run: sed -i "s/_repopassword_/${{secrets.MULESOFT_REPO_PASSWORD}}/g" cicdSettings.xml
 
       - name: Deploy to Nexus
-        run: mvn clean deploy -s cicdSettings.xml -gs cicdSettings.xml
+        run: mvn clean deploy -s cicdSettings.xml -gs cicdSettings.xml -X
 
       - name: Deploy to Anypoint
         run: |
