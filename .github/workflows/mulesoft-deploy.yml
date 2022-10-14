@@ -45,9 +45,6 @@ jobs:
       # - name: Replace repo password in cicdSettings.xml
       #   run: sed -i "s/_repopassword_/${{secrets.MULESOFT_REPO_PASSWORD}}/g" cicdSettings.xml
 
-      - name: Print effective-settings
-        run: mvn help:effective-settings
-
       - name: Deploy to Nexus
         run: mvn clean deploy -s cicdSettings.xml -gs cicdSettings.xml -U
 
