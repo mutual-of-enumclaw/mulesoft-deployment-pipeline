@@ -11,6 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Microsoft Teams Deploy Card
+        uses: patrickpaulin/ms-teams-deploy-card@master
+        if: always()
+        with:
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
+          card-layout-exit: complete
+          show-on-start: false
+
       # - uses: actions/cache@v1
       #   with:
       #     path: ~/.m2/repository
