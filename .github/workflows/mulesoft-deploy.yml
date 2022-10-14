@@ -51,8 +51,8 @@ jobs:
         with:
           files: "~/.m2/repository/0072e005-3972-479c-9ff1-40535876d0fe/moe-commmon-services/1.0.0/moe-common-services-1.0.0-mule-plugin.jar"
 
-      - name: download then whole thing
-        run: mvn dependency:copy-dependencies -DoutputDirectory=~/.m2/repository/0072e005-3972-479c-9ff1-40535876d0fe/
+      # - name: download then whole thing
+      #   run: mvn dependency:copy-dependencies -DoutputDirectory=~/.m2/repository/0072e005-3972-479c-9ff1-40535876d0fe/
 
       - name: File exists
         if: steps.check_files.outputs.files_exists == 'true'
