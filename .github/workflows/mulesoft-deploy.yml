@@ -16,7 +16,7 @@ jobs:
         if: always()
         with:
           github-token: ${{ github.token }}
-          webhook-uri: https://enumclawpandc.webhook.office.com/webhookb2/0a5c573e-bc14-4ebd-9a8c-25758936fe65@5a381f7d-cc3d-4a93-b2cb-d2fd072e535a/IncomingWebhook/d97bd856b3a946d99e65af2a80cae153/9e2fe590-3089-4c1f-9d48-8eae5edfd4b7
+          webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
           card-layout-exit: complete
           show-on-start: false
           custom-facts: |
@@ -46,10 +46,10 @@ jobs:
 
 
       # - name: Replace connected app clientid in cicdSettings.xml
-      #   run: sed -i "s/_CLIENTID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" cicdSettings.xml
+      #   run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" cicdSettings.xml
 
       # - name: Replace connected app secret in cicdSettings.xml
-      #   run: sed -i "s/_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" cicdSettings.xml
+      #   run: sed -i "s/_CONNECTED_APP_CLIENT_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" cicdSettings.xml
 
       # - name: Replace repo user name in cicdSettings.xml
       #   run: sed -i "s/_repousername_/${{secrets.MULESOFT_REPO_USERNAME}}/g" cicdSettings.xml
