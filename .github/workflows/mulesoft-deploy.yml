@@ -10,13 +10,13 @@ on:
       _ANYPOINT_PLATFORM_CLIENT_ID_:
         required: true
       _ANYPOINT_PLATFORM_CLIENT_SECRET_:
-        required: true  
+        required: true
       _repousername_:
-        required: true  
+        required: true
       _repopassword_:
-        required: true  
+        required: true
       MULESOFT_MS_TEAMS_WEBHOOK:
-        required: true  
+        required: true
 
 jobs:
 
@@ -34,7 +34,7 @@ jobs:
           github-token: ${{ github.token }}
           webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
           card-layout-exit: complete
-          show-on-start: false          
+          show-on-start: false
           custom-facts: |
             - name: Environment
               value: Development
