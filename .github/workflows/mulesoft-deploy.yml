@@ -18,8 +18,7 @@ jobs:
           github-token: ${{ github.token }}
           webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
           card-layout-exit: complete
-          show-on-start: true
-          show-on-failure: true
+          show-on-start: false          
           custom-facts: |
             - name: Environment
               value: Development
