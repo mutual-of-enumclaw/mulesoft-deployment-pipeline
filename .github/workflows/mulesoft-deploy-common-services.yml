@@ -2,40 +2,67 @@ name: Deploy mulesoft common services
 
 on:
   workflow_call:
+    secrets:
+      _CONNECTED_APP_CLIENT_ID_:
+        required: true
+      _CONNECTED_APP_CLIENT_SECRET_:
+        required: true
+      _ANYPOINT_PLATFORM_CLIENT_ID_:
+        required: true
+      _ANYPOINT_PLATFORM_CLIENT_SECRET_:
+        required: true  
+      _repousername_:
+        required: true  
+      _repopassword_:
+        required: true  
+      MULESOFT_MS_TEAMS_WEBHOOK:
+        required: true   
 
 jobs:
   deploy:
     name: Deploy stack
     runs-on: ubuntu-latest
-
+                             
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Replace connected app clientid in pom.xml
-      run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
+    - name: Microsoft Teams Deploy Card
+      uses: patrickpaulin/ms-teams-deploy-card@master
+      if: always()
+      with:
+        github-token: ${{ github.token }}
+        webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
+        card-layout-exit: complete
+        show-on-start: false          
+        custom-facts: |
+          - name: Environment
+            value: Development   
+          
+#     - name: Replace connected app clientid in pom.xml
+#       run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
 
-    - name: Replace connected app secret in pom.xml
-      run: sed -i "s/_CONNECTED_APP_CLIENT_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" pom.xml
+#     - name: Replace connected app secret in pom.xml
+#       run: sed -i "s/_CONNECTED_APP_CLIENT_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" pom.xml
 
-    - name: Replace anypoint platform clientid in pom.xml
-      run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_ID_/${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}/g" pom.xml
+#     - name: Replace anypoint platform clientid in pom.xml
+#       run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_ID_/${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}/g" pom.xml
 
-    - name: Replace anypoint platform secret in pom.xml
-      run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_SECRET_/${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}/g" pom.xml
+#     - name: Replace anypoint platform secret in pom.xml
+#       run: sed -i "s/_ANYPOINT_PLATFORM_CLIENT_SECRET_/${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}/g" pom.xml
 
 
-    - name: Replace connected app clientid in cicdSettings.xml
-      run: sed -i "s/_CLIENTID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" cicdSettings.xml
+#     - name: Replace connected app clientid in cicdSettings.xml
+#       run: sed -i "s/_CLIENTID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" cicdSettings.xml
 
-    - name: Replace connected app secret in cicdSettings.xml
-      run: sed -i "s/_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" cicdSettings.xml
+#     - name: Replace connected app secret in cicdSettings.xml
+#       run: sed -i "s/_SECRET_/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g" cicdSettings.xml
 
-    - name: Replace repo user name in cicdSettings.xml
-      run: sed -i "s/_repousername_/${{secrets.MULESOFT_REPO_USERNAME}}/g" cicdSettings.xml
+#     - name: Replace repo user name in cicdSettings.xml
+#       run: sed -i "s/_repousername_/${{secrets.MULESOFT_REPO_USERNAME}}/g" cicdSettings.xml
 
-    - name: Replace repo password in cicdSettings.xml
-      run: sed -i "s/_repopassword_/${{secrets.MULESOFT_REPO_PASSWORD}}/g" cicdSettings.xml
+#     - name: Replace repo password in cicdSettings.xml
+#       run: sed -i "s/_repopassword_/${{secrets.MULESOFT_REPO_PASSWORD}}/g" cicdSettings.xml
 
     - name: Deploy to Nexus
       run: mvn clean deploy -s cicdSettings.xml -gs cicdSettings.xml
