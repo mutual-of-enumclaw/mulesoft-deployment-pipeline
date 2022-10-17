@@ -2,6 +2,21 @@
 name: Deploy MuleSoft application
 on:
   workflow_call:
+    secrets:
+      _CONNECTED_APP_CLIENT_ID_:
+        required: true
+      _CONNECTED_APP_CLIENT_SECRET_:
+        required: true
+      _ANYPOINT_PLATFORM_CLIENT_ID_:
+        required: true
+      _ANYPOINT_PLATFORM_CLIENT_SECRET_:
+        required: true  
+      _repousername_:
+        required: true  
+      _repopassword_:
+        required: true  
+      MULESOFT_MS_TEAMS_WEBHOOK:
+        required: true  
 
 jobs:
 
