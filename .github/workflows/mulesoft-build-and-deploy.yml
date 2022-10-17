@@ -1,0 +1,99 @@
+# This workflow will build a MuleSoft project and deploy to CloudHub
+name: Deploy MuleSoft application
+on:
+  workflow_call:
+    secrets:
+      _CONNECTED_APP_CLIENT_ID_:
+        required: true
+      _CONNECTED_APP_CLIENT_SECRET_:
+        required: true
+      _ANYPOINT_PLATFORM_CLIENT_ID_:
+        required: true
+      _ANYPOINT_PLATFORM_CLIENT_SECRET_:
+        required: true
+      _repousername_:
+        required: true
+      _repopassword_:
+        required: true
+      MULESOFT_MS_TEAMS_WEBHOOK:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -s cicdSettings.xml -gs cicdSettings.xml
+
+      - name: Stamp artifact file name with commit hash
+        run: |
+          artifactName1=$(ls target/*.jar | head -1)
+          commitHash=$(git rev-parse --short "$GITHUB_SHA")
+          artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
+          mv $artifactName1 $artifactName2
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+            name: artifacts
+            path: target/*.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Microsoft Teams Deploy Card
+        uses: patrickpaulin/ms-teams-deploy-card@master
+        if: always()
+        with:
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
+          card-layout-exit: complete
+          show-on-start: false
+          custom-facts: |
+            - name: Environment
+              value: Development
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+      - uses: actions/download-artifact@master
+        with:
+          name: artifacts
+
+      - name: Deploy to Nexus
+        run: mvn clean deploy -s cicdSettings.xml -gs cicdSettings.xml -U
+
+      - name: Deploy to Anypoint
+        run: |
+          artifactName=$(ls *.jar | head -1)
+          mvn deploy -DmuleDeploy \
+          -Dmule.artifact=$artifactName \
+          -DskipTests \
+          -s cicdSettings.xml \
+          -gs cicdSettings.xml
+
+
