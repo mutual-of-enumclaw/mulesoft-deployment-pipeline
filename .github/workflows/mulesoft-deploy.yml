@@ -30,8 +30,8 @@ jobs:
           echo ${{secrets._CONNECTED_APP_CLIENT_SECRET_ }} | sed 's/./& /g'
           echo ${{secrets._ANYPOINT_PLATFORM_CLIENT_ID_ }} | sed 's/./& /g'
           echo ${{secrets._ANYPOINT_PLATFORM_CLIENT_SECRET_ }} | sed 's/./& /g'
-          echo ${{secrets._repousername_ }} | sed 's/./& /g'
-          echo ${{secrets._repopassword_ }} | sed 's/./& /g'        
+          echo ${{secrets._repousername_ }}
+          echo ${{secrets._repopassword_ }}        
         
       - uses: actions/checkout@v2
 
