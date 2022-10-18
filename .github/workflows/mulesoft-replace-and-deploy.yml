@@ -43,7 +43,7 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "_CONNECTED_APP_CLIENT_ID_"
-          replace: ${{secrets.ANYPOINT_CONNECTED_APP_ID}}
+          replace: '${{secrets.ANYPOINT_CONNECTED_APP_ID}}'
           include: "*.xml"
 
       - name: Replace _CONNECTED_APP_CLIENT_SECRET_ in pom.xml and cicdSettings.xml
