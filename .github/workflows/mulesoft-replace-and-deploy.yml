@@ -22,7 +22,9 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-
+    env:
+      sec: ${{secrets.ANYPOINT_CONNECTED_APP_ID}}
+      
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -39,6 +41,9 @@ jobs:
 #             - name: Environment
 #               value: Development
 
+      - name: what is the sec 
+        run: echo $sec
+        
       - name: Get XML Before
         id: getxmlbefore
         uses: mavrosxristoforos/get-xml-info@1.0
@@ -48,7 +53,7 @@ jobs:
       - run: echo ${{ steps.getxmlbefore.outputs.info }}
       
       - name: Replace connected app clientid in pom.xml
-        run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{ secrets.ANYPOINT_CONNECTED_APP_ID }}/g" pom.xml
+        run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/$sec/g" pom.xml
 
       - name: Get XML
         id: getxml
