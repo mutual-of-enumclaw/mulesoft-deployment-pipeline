@@ -50,35 +50,35 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "_CONNECTED_APP_CLIENT_SECRET_"
-          replace: ${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}
+          replace: '${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}'
           include: "*.xml"
 
       - name: Replace _ANYPOINT_PLATFORM_CLIENT_ID_ in pom.xml
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "_ANYPOINT_PLATFORM_CLIENT_ID_"
-          replace: ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}
+          replace: '${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}'
           include: "pom.xml"
 
       - name: Replace _ANYPOINT_PLATFORM_CLIENT_SECRET_ in pom.xml
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "_ANYPOINT_PLATFORM_CLIENT_SECRET_"
-          replace: ${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}
+          replace: '${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}'
           include: "pom.xml"
 
       - name: Replace _repousername_ in cicdSettings.xml
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "_repousername_"
-          replace: ${{secrets.MULESOFT_REPO_USERNAME}}
+          replace: '${{secrets.MULESOFT_REPO_USERNAME}}'
           include: "pom.xml"
 
       - name: Replace _repopassword_ in cicdSettings.xml
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "_repopassword_"
-          replace: ${{secrets.MULESOFT_REPO_PASSWORD}}
+          replace: '${{secrets.MULESOFT_REPO_PASSWORD}}'
           include: "pom.xml"
 
 
