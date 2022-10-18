@@ -39,6 +39,14 @@ jobs:
 #             - name: Environment
 #               value: Development
 
+      - name: Get XML Before
+        id: getxmlbefore
+        uses: mavrosxristoforos/get-xml-info@1.0
+        with:
+          xml-file: 'pom.xml'
+          xpath: "//*[local-name()='project']/*[local-name()='build']/*[local-name()='plugins']/*[local-name()='plugin']/*[local-name()='configuration']/*[local-name()='cloudhub2Deployment']/*[local-name()='connectedAppClientId']"
+      - run: echo ${{ steps.getxmlbefore.outputs.info }}
+      
       - name: Replace connected app clientid in pom.xml
         run: sed -i 's/_CONNECTED_APP_CLIENT_ID_/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g' pom.xml
 
