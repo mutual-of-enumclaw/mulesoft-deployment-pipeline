@@ -41,7 +41,7 @@ jobs:
 
       - name: what is the sec 
         run: |
-          echo ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}
+          echo 'teams ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}'
           echo ${{secrets.CONNECTED_APP_CLIENT_ID}}
           echo ${{secrets.CONNECTED_APP_CLIENT_SECRET}}
           echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}
