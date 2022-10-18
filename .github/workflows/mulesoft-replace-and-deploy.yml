@@ -22,8 +22,6 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    env:
-      sec: ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}
       
     steps:
       - name: checkout
@@ -63,7 +61,7 @@ jobs:
       - run: echo ${{ steps.getxmlbefore.outputs.info }}
       
       - name: Replace connected app clientid in pom.xml
-        run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/$sec/g" pom.xml
+        run: sed -i "s/_CONNECTED_APP_CLIENT_ID_/${{secrets.CONNECTED_APP_CLIENT_ID}}/g" pom.xml
 
       - name: Get XML
         id: getxml
