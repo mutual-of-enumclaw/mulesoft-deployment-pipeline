@@ -47,7 +47,7 @@ jobs:
         uses: mavrosxristoforos/get-xml-info@1.0
         with:
           xml-file: 'pom.xml'
-          xpath: "//[local-name()='project']/[local-name()='build']/[local-name()='plugins']/[local-name()='plugin']/[local-name()='configuration']/[local-name()='cloudhub2Deployment']/[local-name()='connectedAppClientId']"
+          xpath: "//*[local-name()='project']/*[local-name()='build']/*[local-name()='plugins']/*[local-name()='plugin']/*[local-name()='configuration']/*[local-name()='cloudhub2Deployment']/*[local-name()='connectedAppClientId']"
       - run: echo ${{ steps.getxml.outputs.info }}
   
 #       - name: Replace connected app secret in pom.xml
