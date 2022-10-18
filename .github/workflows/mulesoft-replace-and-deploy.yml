@@ -22,32 +22,32 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-      
+
     steps:
       - name: checkout
         uses: actions/checkout@v2
 
-#       - name: Microsoft Teams Deploy Card
-#         uses: patrickpaulin/ms-teams-deploy-card@master
-#         if: always()
-#         with:
-#           github-token: ${{ github.token }}
-#           webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
-#           card-layout-exit: complete
-#           show-on-start: false
-#           custom-facts: |
-#             - name: Environment
-#               value: Development
+      - name: Microsoft Teams Deploy Card
+        uses: patrickpaulin/ms-teams-deploy-card@master
+        if: always()
+        with:
+          github-token: ${{ github.token }}
+          webhook-uri: ${{ secrets.MULESOFT_MS_TEAMS_WEBHOOK }}
+          card-layout-exit: complete
+          show-on-start: false
+          custom-facts: |
+            - name: Environment
+              value: Development
 
-      - name: what is the sec 
+      - name: what is the sec
         run: |
           echo 'ANYPOINT_CONNECTED_APP_ID ${{secrets.ANYPOINT_CONNECTED_APP_ID}}'
           echo 'ANYPOINT_CONNECTED_APP_SECRET ${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}'
           echo 'ANYPOINT_PLATFORM_CLIENT_ID ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}'
           echo 'ANYPOINT_PLATFORM_CLIENT_SECRET ${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}'
           echo 'MULESOFT_REPO_USERNAME ${{secrets.MULESOFT_REPO_USERNAME}}'
-          echo 'MULESOFT_REPO_PASSWORD ${{secrets.MULESOFT_REPO_PASSWORD}}'                   
-          echo 'MULESOFT_MS_TEAMS_WEBHOOK ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}'        
+          echo 'MULESOFT_REPO_PASSWORD ${{secrets.MULESOFT_REPO_PASSWORD}}'
+          echo 'MULESOFT_MS_TEAMS_WEBHOOK ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}'
 
       - name: Replace connected app clientid in pom.xml
         run: sed -i "s/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
