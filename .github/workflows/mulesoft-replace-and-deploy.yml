@@ -23,7 +23,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      sec: ${{secrets.ANYPOINT_CONNECTED_APP_ID}}
+      sec: ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}
       
     steps:
       - name: checkout
