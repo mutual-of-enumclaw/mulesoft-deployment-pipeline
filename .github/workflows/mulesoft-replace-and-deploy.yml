@@ -42,7 +42,17 @@ jobs:
 #               value: Development
 
       - name: what is the sec 
-        run: echo $sec
+        run: |
+          echo ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}
+          echo ${{secrets.CONNECTED_APP_CLIENT_ID}}
+          echo ${{secrets.CONNECTED_APP_CLIENT_SECRET}}
+          echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}
+          echo ${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}
+          echo ${{secrets.repousername}}
+          echo ${{secrets.repopassword}}
+          echo ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}
+          
+          
         
       - name: Get XML Before
         id: getxmlbefore
