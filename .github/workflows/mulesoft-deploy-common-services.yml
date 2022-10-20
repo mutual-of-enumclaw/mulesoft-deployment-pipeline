@@ -27,12 +27,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Check Commit Type
-      uses: gsactions/commit-message-checker@v2
+    - name: Bump Version
+      id: bump
+      uses: nnichols/maven-version-bump-action@v3
       with:
-        pattern: '/#minor'
-        flags: 'gm'
-        error: 'Commit message requires the word #minor'      
+        github-token: ${{ secrets.github_token }}    
 
     - name: Microsoft Teams Deploy Card
       uses: patrickpaulin/ms-teams-deploy-card@master
