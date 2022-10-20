@@ -27,6 +27,12 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: Bump Version
+        id: bump
+        uses: nnichols/maven-version-bump-action@v3
+        with:
+          github-token: ${{ secrets.github_token }} 
+
       - name: Microsoft Teams Deploy Card
         uses: patrickpaulin/ms-teams-deploy-card@master
         if: always()
