@@ -86,7 +86,7 @@ jobs:
       - name: Deploy to Anypoint
         run: |
           mvn deploy -DmuleDeploy \
-          -DskipMunitTests -e \
+          -DskipMunitTests \
           -s cicdSettings.xml \
           -gs cicdSettings.xml
 
