@@ -45,18 +45,6 @@ jobs:
             - name: Environment
               value: Development
 
-      - name: Replace Secrets
-        run: | 
-          sed -i "s/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml \
-          sed -i 's/ANYPOINT_CONNECTED_APP_SECRET/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g' pom.xml \
-          sed -i 's/ANYPOINT_PLATFORM_CLIENT_ID/${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}/g' pom.xml \
-          sed -i 's/ANYPOINT_PLATFORM_CLIENT_SECRET/${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}/g' pom.xml \
-          sed -i 's/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g' cicdSettings.xml \
-          sed -i 's/ANYPOINT_CONNECTED_APP_SECRET/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g' cicdSettings.xml \
-          sed -i 's/MULESOFT_REPO_USERNAME/${{secrets.MULESOFT_REPO_USERNAME}}/g' cicdSettings.xml \
-          sed -i 's/MULESOFT_REPO_PASSWORD/${{secrets.MULESOFT_REPO_PASSWORD}}/g' cicdSettings.xml
-
-
       - name: Replace connected app clientid in pom.xml
         run: sed -i "s/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
 
@@ -68,7 +56,6 @@ jobs:
 
       - name: Replace anypoint platform secret in pom.xml
         run: sed -i 's/ANYPOINT_PLATFORM_CLIENT_SECRET/${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}/g' pom.xml
-
 
       - name: Replace connected app clientid in cicdSettings.xml
         run: sed -i 's/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g' cicdSettings.xml
