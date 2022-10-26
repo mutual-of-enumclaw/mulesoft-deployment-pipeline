@@ -2,6 +2,10 @@
 name: Deploy MuleSoft application
 on:
   workflow_call:
+    inputs:
+      muleEnvironment:
+        required: true
+        type: string
     secrets:
       ANYPOINT_CONNECTED_APP_ID:
         required: true
@@ -17,10 +21,6 @@ on:
         required: true
       MULESOFT_MS_TEAMS_WEBHOOK:
         required: true
-    inputs:
-      MULESOFT_ENVIRONMENT:
-        required: true
-        type: string
 
 jobs:
 
@@ -78,7 +78,7 @@ jobs:
 
       - name: Deploy to Anypoint
         run: |
-          mvn clean package deploy -B -ntp -DmuleDeploy -P${{MULESOFT_ENVIRONMENT}}\
+          mvn clean package deploy -B -ntp -DmuleDeploy -P${{muleEnvironment}}\
           -DskipMunitTests \
           -s cicdSettings.xml \
           -gs cicdSettings.xml
