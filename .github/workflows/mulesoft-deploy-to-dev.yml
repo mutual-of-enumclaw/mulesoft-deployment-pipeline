@@ -47,7 +47,7 @@ jobs:
           show-on-start: false
           custom-facts: |
             - name: Environment
-              value: Development
+              value: ${{inputs.muleEnvironment}}
 
       - name: Replace connected app clientid in pom.xml
         run: sed -i "s/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
