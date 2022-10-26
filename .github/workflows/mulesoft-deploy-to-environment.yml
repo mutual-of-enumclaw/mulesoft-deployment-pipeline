@@ -17,8 +17,10 @@ on:
         required: true
       MULESOFT_MS_TEAMS_WEBHOOK:
         required: true
+    inputs:
       MULESOFT_ENVIRONMENT:
         required: true
+        type: string
 
 jobs:
 
@@ -33,7 +35,7 @@ jobs:
         id: bump
         uses: nnichols/maven-version-bump-action@v3
         with:
-          github-token: ${{ secrets.github_token }} 
+          github-token: ${{ secrets.github_token }}
 
       - name: Microsoft Teams Deploy Card
         uses: patrickpaulin/ms-teams-deploy-card@master
