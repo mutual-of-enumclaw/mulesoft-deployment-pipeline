@@ -73,6 +73,9 @@ jobs:
       - name: Replace repo password in cicdSettings.xml
         run: sed -i 's/MULESOFT_REPO_PASSWORD/${{secrets.MULESOFT_REPO_PASSWORD}}/g' cicdSettings.xml
 
+      - name: Deploy to Nexus
+        run: mvn clean deploy -B -ntp -DskipMunitTests -s cicdSettings.xml -gs cicdSettings.xml -U
+
       - name: Deploy to Anypoint
         run: |
           mvn clean package deploy -B -ntp -DmuleDeploy -P${{inputs.muleEnvironment}} \
