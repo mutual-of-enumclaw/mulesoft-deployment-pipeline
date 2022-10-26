@@ -17,6 +17,8 @@ on:
         required: true
       MULESOFT_MS_TEAMS_WEBHOOK:
         required: true
+      MULESOFT_ENVIRONMENT:
+        required: true
 
 jobs:
 
@@ -74,7 +76,7 @@ jobs:
 
       - name: Deploy to Anypoint
         run: |
-          mvn clean package deploy -B -DmuleDeploy \
+          mvn clean package deploy -DmuleDeploy -P${{MULESOFT_ENVIRONMENT}}\
           -DskipMunitTests \
           -s cicdSettings.xml \
           -gs cicdSettings.xml
