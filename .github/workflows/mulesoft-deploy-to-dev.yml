@@ -31,12 +31,13 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: cache
-        uses: actions/setup-java@v3
+      - name: Cache
+        uses: actions/cache@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
-          cache: 'maven'
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+              ${{ runner.os }}-maven-
 
       - name: Bump Version
         id: bump
