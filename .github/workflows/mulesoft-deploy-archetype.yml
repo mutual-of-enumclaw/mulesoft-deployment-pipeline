@@ -39,16 +39,6 @@ jobs:
             - name: Environment
               value: Development
 
-      - name: what is the sec
-        run: |
-          echo 'ANYPOINT_CONNECTED_APP_ID ${{secrets.ANYPOINT_CONNECTED_APP_ID}}'
-          echo 'ANYPOINT_CONNECTED_APP_SECRET ${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}'
-          echo 'ANYPOINT_PLATFORM_CLIENT_ID ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}}'
-          echo 'ANYPOINT_PLATFORM_CLIENT_SECRET ${{secrets.ANYPOINT_PLATFORM_CLIENT_SECRET}}'
-          echo 'MULESOFT_REPO_USERNAME ${{secrets.MULESOFT_REPO_USERNAME}}'
-          echo 'MULESOFT_REPO_PASSWORD ${{secrets.MULESOFT_REPO_PASSWORD}}'
-          echo 'MULESOFT_MS_TEAMS_WEBHOOK ${{secrets.MULESOFT_MS_TEAMS_WEBHOOK}}'
-
       - name: Replace connected app clientid in pom.xml
         run: sed -i "s/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
 
@@ -76,7 +66,7 @@ jobs:
 
       - name: Deploy to Anypoint
         run: |
-          mvn deploy -DmuleDeploy \
+          mvn clean package deploy -B -ntp -DmuleDeploy \
           -DskipTests -e \
           -s cicdSettings.xml \
           -gs cicdSettings.xml
