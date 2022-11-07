@@ -58,7 +58,7 @@ jobs:
               value: ${{inputs.muleEnvironment}}
         
       - name: Replace connected app clientid in pom.xml
-        run: sed -i "s/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
+        run: sed -i 's/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g' pom.xml
 
       - name: Replace connected app secret in pom.xml
         run: sed -i 's/ANYPOINT_CONNECTED_APP_SECRET/${{secrets.ANYPOINT_CONNECTED_APP_SECRET}}/g' pom.xml
